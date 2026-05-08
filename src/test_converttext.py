@@ -1,9 +1,9 @@
 import unittest
-from converttext import text_to_textnodes
+from converttext import text_to_textnodes, markdown_to_blocks
 from textnode import TextNode, TextType
 
 class TestConvertText(unittest.TestCase):
-    def test_all(self):
+    def test_all_conversions(self):
         text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
         nodes = text_to_textnodes(text)
         self.assertListEqual(
@@ -20,4 +20,52 @@ class TestConvertText(unittest.TestCase):
                 TextNode("link", TextType.LINK, "https://boot.dev")
             ],
             nodes
+        )
+
+    def test_markdown_to_blocks(self):
+        md = """
+This is **bolded** paragraph
+
+This is another paragraph with _italic_ text and `code` here
+This is the same paragraph on a new line
+
+- This is a list
+- with items
+"""
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(
+            blocks,
+            [
+                "This is **bolded** paragraph",
+                "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+                "- This is a list\n- with items"
+            ]
+        )
+
+    def test_markdown_to_blocks_newlines(self):
+        md = """
+
+
+This is **bolded** paragraph
+
+
+
+This is another paragraph with _italic_ text and `code` here
+This is the same paragraph on a new line
+
+
+
+- This is a list
+- with items
+
+
+"""
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(
+            blocks,
+            [
+                "This is **bolded** paragraph",
+                "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+                "- This is a list\n- with items"
+            ]
         )
