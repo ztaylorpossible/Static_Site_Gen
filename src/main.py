@@ -1,7 +1,7 @@
 from textnode import TextNode, TextType
+from copydir import copy_dir_contents
 
 def main():
-    node = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
-    print(node)
+    copy_dir_contents("static/", "public/")
 
 main()
