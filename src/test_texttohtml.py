@@ -50,7 +50,7 @@ class TestTextToHTML(unittest.TestCase):
         node = TextNode("This is an image node", TextType.IMAGE, "meme.jpg")
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, "img")
-        self.assertEqual(html_node.value, None)
+        self.assertEqual(html_node.value, "This is an image node")
         self.assertIsNotNone(html_node.props)
         if html_node.props:
             self.assertEqual(html_node.props["src"], "meme.jpg")
