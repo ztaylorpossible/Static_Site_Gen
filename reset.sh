@@ -1,1 +1,1 @@
-rm -rf public
+rm -rf docs
